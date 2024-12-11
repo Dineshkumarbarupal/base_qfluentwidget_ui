@@ -3,25 +3,25 @@ import sys
 
 from PyQt5.QtCore import Qt, QUrl,QSize
 from PyQt5.QtGui import QIcon, QDesktopServices
-from PyQt5.QtWidgets import QApplication, QFrame, QHBoxLayout
+from PyQt5.QtWidgets import QApplication, QFrame, QHBoxLayout,QVBoxLayout
 from qfluentwidgets import (NavigationItemPosition, MessageBox, setTheme, Theme, FluentWindow,
                             NavigationAvatarWidget, qrouter, SubtitleLabel, setFont, InfoBadge,
-                            InfoBadgePosition, FluentBackgroundTheme, PrimaryPushButton)
+                            InfoBadgePosition, FluentBackgroundTheme, PrimaryPushButton,LineEdit)
 from qfluentwidgets import FluentIcon as FIF
-from automate import WaAutomate
+from whatsapp_automate import WaAutomate
 
 
 class Widget(QFrame):
 
     def __init__(self, text: str, parent=None):
         super().__init__(parent=parent)
-        # self.label = SubtitleLabel(text, self)
-        self.hBoxLayout = QHBoxLayout(self)
+        self.label = SubtitleLabel(text, self)
+        self.hBoxLayout = QVBoxLayout(self)
 
-        # setFont(self.label, 24)
-        # self.label.setAlignment(Qt.AlignCenter)
-        # self.hBoxLayout.addWidget(self.label, 1, Qt.AlignCenter)
-        # self.setObjectName(text.replace(' ', '-'))
+        setFont(self.label, 24)
+        self.label.setAlignment(Qt.AlignCenter)
+        self.hBoxLayout.addWidget(self.label,alignment= Qt.AlignCenter)
+        self.setObjectName(text.replace(' ', '-'))
 
 
 class Window(FluentWindow):
@@ -31,17 +31,17 @@ class Window(FluentWindow):
 
 
         # create sub interface
-        self.homeInterface = Widget( self)
-        self.whatsappInterface = Widget( self)
-        self.amazonInterface = Widget( self)
-        self.folderInterface = Widget(self)
-        self.settingInterface = Widget( self)
-        self.albumInterface = Widget( self)
-        self.albumInterface1 = Widget(self)
-        self.albumInterface2 = Widget( self)
-        self.albumInterface1_1 = Widget( self)
+        self.homeInterface = Widget('Search Interface', self)
+        self.whatsappInterface = Widget('Whatsapp Automation', self)
+        self.amazonInterface = Widget('Amazon Automation', self)
+        self.folderInterface = Widget('Folder Interface', self)
+        self.settingInterface = Widget('Setting Interface', self)
+        self.albumInterface = Widget('Album Interface', self)
+        self.albumInterface1 = Widget('Album Interface 1', self)
+        self.albumInterface2 = Widget('Album Interface 2', self)
+        self.albumInterface1_1 = Widget('Album Interface 1-1', self)
 
-        # self.whatsappInterface.label.setText('')
+        self.whatsappInterface.label.setText('')
 
 
         self.initNavigation()
@@ -49,7 +49,8 @@ class Window(FluentWindow):
 
     def initNavigation(self):
 
-
+        insta_logo = QIcon("insta.png")
+        telegram_logo = QIcon("telegram.png")
         whatsapp_icon = QIcon("whatsapp_logo.png")
         amazon_logo = QIcon("amazon_logo.png")
         self.addSubInterface(self.homeInterface, FIF.HOME, 'Home')
@@ -58,27 +59,45 @@ class Window(FluentWindow):
 
         self.navigationInterface.addSeparator()
 
-        self.addSubInterface(self.albumInterface, FIF.ALBUM, 'Albums', NavigationItemPosition.SCROLL)
-        self.addSubInterface(self.albumInterface1, FIF.ALBUM, 'Album 1', parent=self.albumInterface)
-        self.addSubInterface(self.albumInterface1_1, FIF.ALBUM, 'Album 1.1', parent=self.albumInterface1)
-        self.addSubInterface(self.albumInterface2, FIF.ALBUM, 'Album 2', parent=self.albumInterface)
-        self.addSubInterface(self.folderInterface, FIF.FOLDER, 'Folder library', NavigationItemPosition.SCROLL)
+        self.addSubInterface(self.albumInterface, insta_logo, 'Albums', NavigationItemPosition.SCROLL)
+        self.addSubInterface(self.albumInterface1, FIF.ALBUM, 'insta 1', parent=self.albumInterface)
+        self.addSubInterface(self.albumInterface1_1, FIF.ALBUM, 'insta 1.1', parent=self.albumInterface1)
+        self.addSubInterface(self.albumInterface2, FIF.ALBUM, 'insta 2', parent=self.albumInterface)
+        self.addSubInterface(self.folderInterface, telegram_logo, 'Folder library', NavigationItemPosition.SCROLL)
 
         # add custom widget to bottom
         self.navigationInterface.addWidget(
             routeKey='avatar',
-            widget=NavigationAvatarWidget('zhiyiYo', 'resource/shoko.png'),
+            widget=NavigationAvatarWidget('Alien', 'resource/shoko.png'),
             onClick=self.showMessageBox,
             position=NavigationItemPosition.BOTTOM,
         )
 
         self.addSubInterface(self.settingInterface, FIF.SETTING, 'Settings', NavigationItemPosition.BOTTOM)
 
-        button = PrimaryPushButton("start",self.whatsappInterface)
-        button.clicked.connect(self.whatsapp_automate)
-       
-        self.whatsappInterface.hBoxLayout.addWidget(button, 0, alignment= Qt.AlignCenter)
+        self.contacts = LineEdit()
+        # Set placeholder text
+        self.contacts.setPlaceholderText("Enter contact name")
+        # Set text
+        # lineEdit.setText("shokokawaii@foxmail.com")
+        print(self.contacts.text())
+        # Enable clear button
+        self.contacts.setClearButtonEnabled(True)
 
+        self.massage = LineEdit()
+        self.massage.setPlaceholderText("Enter your masssage")
+        print(self.massage)
+        
+
+        start_button = PrimaryPushButton("start",self.whatsappInterface)
+        start_button.clicked.connect(self.whatsapp_automate)
+
+        self.whatsappInterface.hBoxLayout.setContentsMargins(0,210 , 0, 210)
+       
+        self.whatsappInterface.hBoxLayout.addWidget(self.contacts, alignment= Qt.AlignCenter)
+        self.whatsappInterface.hBoxLayout.addWidget(self.massage, alignment=Qt.AlignCenter)
+        # self.whatsappInterface.hBoxLayout.setSpacing(1)
+        self.whatsappInterface.hBoxLayout.addWidget(start_button,alignment= Qt.AlignCenter)
 
 
         # add badge to navigation item
@@ -96,7 +115,7 @@ class Window(FluentWindow):
     def initWindow(self):
         self.resize(900, 700)
         self.setWindowIcon(QIcon(':/qfluentwidgets/images/logo.png'))
-        self.setWindowTitle('PyQt-Fluent-Widgets')
+        self.setWindowTitle('Automation-Base-Software')
 
         desktop = QApplication.desktop().availableGeometry()
         w, h = desktop.width(), desktop.height()
@@ -112,15 +131,22 @@ class Window(FluentWindow):
             '个人开发不易，如果这个项目帮助到了您，可以考虑请作者喝一瓶快乐水🥤。您的支持就是作者开发和维护项目的动力🚀',
             self
         )
-        w.yesButton.setText('来啦老弟')
-        w.cancelButton.setText('下次一定')
+        w.yesButton.setText('Sourse code')
+        w.cancelButton.setText('Skip')
 
         if w.exec():
             QDesktopServices.openUrl(QUrl("https://afdian.net/a/zhiyiYo"))
 
     
     def whatsapp_automate(self):
-        WaAutomate()
+        user_contect_input = self.contacts.text()
+        user_massage = self.massage.text()
+        
+        if user_contect_input:
+
+            WaAutomate(user_contect_input,user_massage)
+        else:
+            print("Enter valid input")
 
 
 if __name__ == '__main__':
