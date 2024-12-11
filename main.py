@@ -49,21 +49,21 @@ class Window(FluentWindow):
 
     def initNavigation(self):
 
-        insta_logo = QIcon("insta.png")
-        telegram_logo = QIcon("telegram.png")
-        whatsapp_icon = QIcon("whatsapp_logo.png")
-        amazon_logo = QIcon("amazon_logo.png")
+        insta_logo = QIcon("logos/insta.png")
+        telegram_logo = QIcon("logos/telegram.png")
+        whatsapp_icon = QIcon("logos/whatsapp_logo.png")
+        amazon_logo = QIcon("logos/amazon_logo.png")
         self.addSubInterface(self.homeInterface, FIF.HOME, 'Home')
-        self.addSubInterface(self.whatsappInterface, whatsapp_icon, 'Music library')
-        self.addSubInterface(self.amazonInterface, amazon_logo, 'Video library')
+        self.addSubInterface(self.whatsappInterface, whatsapp_icon, 'WhatsApp Automation')
+        self.addSubInterface(self.amazonInterface, amazon_logo, 'Amazon Automation')
 
         self.navigationInterface.addSeparator()
 
-        self.addSubInterface(self.albumInterface, insta_logo, 'Albums', NavigationItemPosition.SCROLL)
+        self.addSubInterface(self.albumInterface, insta_logo, 'Instagram Automatin', NavigationItemPosition.SCROLL)
         self.addSubInterface(self.albumInterface1, FIF.ALBUM, 'insta 1', parent=self.albumInterface)
         self.addSubInterface(self.albumInterface1_1, FIF.ALBUM, 'insta 1.1', parent=self.albumInterface1)
         self.addSubInterface(self.albumInterface2, FIF.ALBUM, 'insta 2', parent=self.albumInterface)
-        self.addSubInterface(self.folderInterface, telegram_logo, 'Folder library', NavigationItemPosition.SCROLL)
+        self.addSubInterface(self.folderInterface, telegram_logo, 'Telegram Automation', NavigationItemPosition.SCROLL)
 
         # add custom widget to bottom
         self.navigationInterface.addWidget(
@@ -114,7 +114,7 @@ class Window(FluentWindow):
 
     def initWindow(self):
         self.resize(900, 700)
-        self.setWindowIcon(QIcon(':/qfluentwidgets/images/logo.png'))
+        self.setWindowIcon(QIcon('logos/base_software_logo.png'))
         self.setWindowTitle('Automation-Base-Software')
 
         desktop = QApplication.desktop().availableGeometry()
@@ -127,15 +127,15 @@ class Window(FluentWindow):
 
     def showMessageBox(self):
         w = MessageBox(
-            '支持作者🥰',
-            '个人开发不易，如果这个项目帮助到了您，可以考虑请作者喝一瓶快乐水🥤。您的支持就是作者开发和维护项目的动力🚀',
+            'Source code',
+            'There is the source code of this base software',
             self
         )
-        w.yesButton.setText('Sourse code')
+        w.yesButton.setText('Source code')
         w.cancelButton.setText('Skip')
 
         if w.exec():
-            QDesktopServices.openUrl(QUrl("https://afdian.net/a/zhiyiYo"))
+            QDesktopServices.openUrl(QUrl("https://github.com/Dineshkumarbarupal/base_qfluentwidget_ui"))
 
     
     def whatsapp_automate(self):

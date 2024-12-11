@@ -1,66 +1,28 @@
-# coding:utf-8
-import sys
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QCompleter
+import requests
 
-from qfluentwidgets import LineEdit, PushButton, SearchLineEdit, setTheme, Theme
+# Base URL with placeholder for the image number
+base_url = "https://vishal-dcode.github.io/Cyberfiction-Clone/assets/images/bg_male/male{:04d}.png"
 
+# Directory to save downloaded images
+save_dir = "images/"
 
-class Demo(QWidget):
+# Start and end numbers for the images
+start = 1  # Start from image 0001
+end = 300  # End at image 0300
 
-    def __init__(self):
-        super().__init__()
-        # self.setStyleSheet("Demo {background: rgb(32, 32, 32)}")
-        # setTheme(Theme.DARK)
+# Loop through the range and download each image
+for i in range(start, end + 1):
+    # Format the URL
+    image_url = base_url.format(i)
+    try:
+        # Send a request to the URL
+        response = requests.get(image_url)
+        response.raise_for_status()  # Check for HTTP errors
 
-        self.hBoxLayout = QHBoxLayout(self)
-        self.lineEdit = SearchLineEdit(self)
-        self.button = PushButton('Search', self)
+        # Save the image
+        with open(f"{save_dir}male{i:04d}.png", "wb") as file:
+            file.write(response.content)
 
-        # add completer
-        stands = [
-            "Star Platinum", "Hierophant Green",
-            "Made in Haven", "King Crimson",
-            "Silver Chariot", "Crazy diamond",
-            "Metallica", "Another One Bites The Dust",
-            "Heaven's Door", "Killer Queen",
-            "The Grateful Dead", "Stone Free",
-            "The World", "Sticky Fingers",
-            "Ozone Baby", "Love Love Deluxe",
-            "Hermit Purple", "Gold Experience",
-            "King Nothing", "Paper Moon King",
-            "Scary Monster", "Mandom",
-            "20th Century Boy", "Tusk Act 4",
-            "Ball Breaker", "Sex Pistols",
-            "D4C • Love Train", "Born This Way",
-            "SOFT & WET", "Paisley Park",
-            "Wonder of U", "Walking Heart",
-            "Cream Starter", "November Rain",
-            "Smooth Operators", "The Matte Kudasai"
-        ]
-        self.completer = QCompleter(stands, self.lineEdit)
-        self.completer.setCaseSensitivity(Qt.CaseInsensitive)
-        self.completer.setMaxVisibleItems(10)
-        self.lineEdit.setCompleter(self.completer)
-
-        self.resize(400, 400)
-        self.hBoxLayout.setAlignment(Qt.AlignCenter)
-        self.hBoxLayout.addWidget(self.lineEdit, 0, Qt.AlignCenter)
-        self.hBoxLayout.addWidget(self.button, 0, Qt.AlignCenter)
-
-        self.lineEdit.setFixedSize(200, 33)
-        self.lineEdit.setClearButtonEnabled(True)
-        self.lineEdit.setPlaceholderText('Search stand')
-
-
-if __name__ == '__main__':
-    # enable dpi scale
-    QApplication.setHighDpiScaleFactorRoundingPolicy(
-        Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
-    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
-    QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
-
-    app = QApplication(sys.argv)
-    w = Demo()
-    w.show()
-    app.exec_()
+        print(f"Downloaded: male{i:04d}.png")
+    except requests.exceptions.RequestException as e:
+        print(f"Failed to download {image_url}: {e}")
