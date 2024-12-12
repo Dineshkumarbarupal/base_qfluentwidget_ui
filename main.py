@@ -40,6 +40,7 @@ class Window(FluentWindow):
         self.albumInterface1 = Widget('Album Interface 1', self)
         self.albumInterface2 = Widget('Album Interface 2', self)
         self.albumInterface1_1 = Widget('Album Interface 1-1', self)
+        self.youtubeInterface = Widget('Youtube Interface', self)
 
         self.whatsappInterface.label.setText('')
 
@@ -53,6 +54,8 @@ class Window(FluentWindow):
         telegram_logo = QIcon("logos/telegram.png")
         whatsapp_icon = QIcon("logos/whatsapp_logo.png")
         amazon_logo = QIcon("logos/amazon_logo.png")
+        youtube_logo = QIcon("logos/youtube_PNG102347.png")
+
         self.addSubInterface(self.homeInterface, FIF.HOME, 'Home')
         self.addSubInterface(self.whatsappInterface, whatsapp_icon, 'WhatsApp Automation')
         self.addSubInterface(self.amazonInterface, amazon_logo, 'Amazon Automation')
@@ -64,6 +67,7 @@ class Window(FluentWindow):
         self.addSubInterface(self.albumInterface1_1, FIF.ALBUM, 'insta 1.1', parent=self.albumInterface1)
         self.addSubInterface(self.albumInterface2, FIF.ALBUM, 'insta 2', parent=self.albumInterface)
         self.addSubInterface(self.folderInterface, telegram_logo, 'Telegram Automation', NavigationItemPosition.SCROLL)
+        self.addSubInterface(self.youtubeInterface, youtube_logo, 'Youtube Automation')
 
         # add custom widget to bottom
         self.navigationInterface.addWidget(
