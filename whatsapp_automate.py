@@ -18,7 +18,7 @@ class WaAutomate:
         chrome_option = Options()
         chrome_option.add_argument("--user-data-dir=C:\\Users\\NSG\\AppData\\Local\\Google\\Chrome\\User Data\\Default")
 
-        driver = webdriver.Chrome(options= chrome_option)
+        driver = webdriver.Chrome()
         driver.get("https://web.whatsapp.com")
         print("Scan QR Code:")
         # input("Press Enter to complete next task:")
@@ -31,6 +31,7 @@ class WaAutomate:
         input_box_search = WebDriverWait(driver, 50).until(
             Ec.element_to_be_clickable((By.XPATH, inp_xpath_search))
         )
+
         # input_box_search.click()
         actions.move_to_element(input_box_search).click().send_keys(self.contact_detail).send_keys(Keys.ENTER).perform()
         try :
@@ -45,10 +46,11 @@ class WaAutomate:
 
         contact_data = []
         contacts = driver.find_elements(By.XPATH, '//*[@id="pane-side"]/div/div/div/div[9]/div/div/div[2]/div[2]/div[2]/span[1]/span')  # Replace with actual contact element class
-
+        # print(contacts.get_attribute("outerHTML"))
         for contact in contacts:
             try:
-                name = contact.text# Adjust XPATH based on the DOM structure
+                name = contact.text  # Adjust XPATH based on the DOM structure
+                print(name)
                 contact_data.append({"Number": name})
             except Exception as e:
                 print(f"Error extracting contact: {e}")

@@ -90,7 +90,7 @@ class Window(FluentWindow):
 
         self.massage = LineEdit()
         self.massage.setPlaceholderText("Enter your masssage")
-        print(self.massage)
+        # print(self.massage)
         
 
         start_button = PrimaryPushButton("start",self.whatsappInterface)
