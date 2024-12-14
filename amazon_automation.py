@@ -4,6 +4,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as Ec
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.chrome.options import Options
+from time import sleep
+
 
 
 class Amazon_automate:
@@ -12,9 +14,11 @@ class Amazon_automate:
         self.driver.get('https://www.amazon.in')
 
 
-        options = Options()
-        options.add_argument("--ignore-certificate-errors")
+        # options = Options()
+        # options.add_argument("--ignore-certificate-errors")
         # self.sereach_product()
+
+
 
     def sereach_product(self):
         action = ActionChains(self.driver)
@@ -25,5 +29,5 @@ class Amazon_automate:
         action.move_to_element(sereach).click().perform()
 
   
-        
+sleep(2)
 Amazon_automate()

@@ -16,7 +16,7 @@ class WaAutomate:
         # text = "Hey, this message was sent using Selenium"
 
         chrome_option = Options()
-        chrome_option.add_argument("--user-data-dir=C:\\Users\\NSG\\AppData\\Local\\Google\\Chrome\\User Data\\Default")
+        chrome_option.add_argument("--user-data-dir=C:\\Users\\NSG\\AppData\\Local\\Google\\Chrome\\User Data")
 
         driver = webdriver.Chrome()
         driver.get("https://web.whatsapp.com")
@@ -46,6 +46,7 @@ class WaAutomate:
 
         contact_data = []
         contacts = driver.find_elements(By.XPATH, '//*[@id="pane-side"]/div/div/div/div[9]/div/div/div[2]/div[2]/div[2]/span[1]/span')  # Replace with actual contact element class
+        print(contacts)
         # print(contacts.get_attribute("outerHTML"))
         for contact in contacts:
             try:
@@ -54,15 +55,17 @@ class WaAutomate:
                 contact_data.append({"Number": name})
             except Exception as e:
                 print(f"Error extracting contact: {e}")
+        
+        print(contact_data)
 
         # Step 4: Write to CSV
-        csv_file = "contacts.csv"
-        with open(csv_file, mode="w", newline="", encoding="utf-8") as file:
-            writer = csv.DictWriter(file, fieldnames=["Number"])
-            writer.writeheader()
-            writer.writerows(contact_data)
+        # csv_file = "contacts.csv"
+        # with open(csv_file, mode="w", newline="", encoding="utf-8") as file:
+        #     writer = csv.DictWriter(file, fieldnames=["Number"])
+        #     writer.writeheader()
+        #     writer.writerows(contact_data)
 
-        print(f"Data written to {csv_file}")
+        # print(f"Data written to {csv_file}")
 
         # group = WebDriverWait(driver,10).until(Ec.element_to_be_clickable((By.XPATH,'//*[@id="side"]/div[1]/div/div[2]/div[2]')))
         # actions.move_to_element(group).click().send_keys("BUSINESS ASSOCIATE").send_keys(Keys.ENTER).perform()
@@ -73,6 +76,9 @@ class WaAutomate:
         print("Mission successfull...")
         
 if __name__== "__main__":
-    WaAutomate()
+    WaAutomate("study", "massage")
+
+
+
 
     
