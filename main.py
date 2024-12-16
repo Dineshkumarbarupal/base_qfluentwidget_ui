@@ -23,8 +23,6 @@ class Widget(QFrame):
         self.hBoxLayout.addWidget(self.label,alignment= Qt.AlignCenter)
         self.setObjectName(text.replace(' ', '-'))
 
-    
-
 
 class Window(FluentWindow):
 
@@ -43,35 +41,168 @@ class Window(FluentWindow):
         self.instaInterface2 = Widget('Insta Interface 2', self)
         self.instaInterface1_1 = Widget('Insta Interface 1-1', self)
 
+        self.homeInterface.label.setText('')
         self.whatsappInterface.label.setText('')
+        self.telegramInterface.label.setText('')
+        self.youtubeInterface.label.setText('')
+        self.instaInterface.label.setText('')
+        self.youtubeInterface.label.setText('')
+        self.amazonInterface.label.setText('')
         
         self.addFrameToWhatsAppInterface()
+        self.add_frame_to_amazon_interface()
+        self.youtube_interface_task()
+        self.telegram_intrface_task()
         self.initNavigation()
         self.initWindow()
 
-    
     def addFrameToWhatsAppInterface(self):
-        """Add a frame inside the WhatsApp interface."""
-        # Create a layout for WhatsApp interface
-        layout = QVBoxLayout(self.whatsappInterface)
+        """Add a frame inside the WhatsApp interface with spacers for alignment."""
+        # Fetch the existing layout
+        layout = self.whatsappInterface.layout()
+
+        # Create spacers for alignment
+        top_spacer = QSpacerItem(30, 30, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        bottom_spacer = QSpacerItem(30, 30, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         # Create a frame
         frame = QFrame(self.whatsappInterface)
         frame.setFrameShape(QFrame.StyledPanel)
         frame.setFrameShadow(QFrame.Raised)
         frame.setStyleSheet("background-color: white; border-radius: 10px")
-        frame.setFixedSize(200,200)
+        frame.setFixedSize(600, 400)
 
-        # Add content to the frame (e.g., a label)
+        # Add content to the frame
         frame_layout = QVBoxLayout(frame)
-        label = QLabel("This is a frame inside WhatsApp Interface", frame)
+        label = QLabel("Enter your contact name/number")
+
+        frame_layout.addStretch(1)
+
         label.setAlignment(Qt.AlignCenter)
         frame_layout.addWidget(label)
 
-        # Add the frame to the WhatsApp interface layout
-        start_button = PrimaryPushButton("start")
-        frame_layout.addWidget(start_button,alignment= Qt.AlignCenter)
-        layout.addWidget(frame,alignment=Qt.AlignCenter)
+        self.contact_detail = LineEdit()
+        self.contact_detail.setPlaceholderText("Enter your contact datails")
+        self.contact_detail.setFixedSize(190,35)
+        frame_layout.addWidget(self.contact_detail,alignment=Qt.AlignCenter)
+
+        massage_label = QLabel("Enter your massage")
+        frame_layout.addWidget(massage_label)
+        frame_layout.addWidget(massage_label,alignment=Qt.AlignCenter)
+
+        self.massage = LineEdit()
+        self.massage.setPlaceholderText("Enter your massage")
+        frame_layout.addWidget(self.massage,alignment=Qt.AlignCenter)
+
+        start_button = PrimaryPushButton("Start")
+        start_button.clicked.connect(self.whatsapp_automate)
+        frame_layout.addWidget(start_button, alignment=Qt.AlignCenter)
+
+        frame_layout.addStretch(1)
+
+        # Add spacers and frame to layout
+        layout.addItem(top_spacer)
+        layout.addWidget(frame, alignment= Qt.AlignCenter)
+        layout.addItem(bottom_spacer)
+
+    def add_frame_to_amazon_interface(self):
+        layout = self.amazonInterface.layout()
+
+        top_spacer = QSpacerItem(30,30, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        bottom_spacer = QSpacerItem(30,30, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        frame = QFrame(self.amazonInterface)
+        frame.setStyleSheet("background-color: white; border-radius: 10px")
+        frame.setFixedSize(600,400)
+        frame_layout = QVBoxLayout(frame)
+
+        search_label = QLabel("Enter your search input")
+        frame_layout.addWidget(search_label,alignment=Qt.AlignCenter)
+
+        search_input = LineEdit() 
+        search_input.setPlaceholderText("search here")
+
+        frame_layout.addWidget(search_input,alignment=Qt.AlignCenter) 
+
+        start_button = PrimaryPushButton("Start Automation")
+        frame_layout.addWidget(start_button,alignment=Qt.AlignCenter)
+
+        frame.setFixedSize(600,400)
+        
+        layout.addItem(top_spacer)
+        layout.addWidget(frame, alignment= Qt.AlignCenter)
+        layout.addItem(bottom_spacer)
+
+    def telegram_intrface_task(self):
+        layout = self.telegramInterface.layout()
+
+        top_spacer = QSpacerItem(30,30, QSizePolicy.Minimum,QSizePolicy.Expanding)
+        bottom_spacer = QSpacerItem(30,30, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        frame = QFrame(self.telegramInterface)
+        frame.setStyleSheet("background-color:white; border-radius:10px")
+        frame.setFixedSize(600,400)
+        frame_layout = QVBoxLayout(frame)
+
+        search_label = QLabel("Enter which thing you want to search")
+        frame_layout.addWidget(search_label,alignment=Qt.AlignCenter)
+        
+        search = LineEdit()
+        search.setPlaceholderText("Search here")
+        frame_layout.addWidget(search,alignment=Qt.AlignCenter)
+
+        start_button = PrimaryPushButton("Start")
+        frame_layout.addWidget(start_button,alignment=Qt.AlignCenter)       
+
+        layout.addItem(top_spacer)
+        layout.addWidget(frame,alignment= Qt.AlignCenter) 
+        layout.addItem(bottom_spacer)
+
+    def youtube_interface_task(self):
+        layout = self.youtubeInterface.layout()
+
+        top_spacer = QSpacerItem(30,30, QSizePolicy.Minimum,QSizePolicy.Expanding)
+        bottom_spacer = QSpacerItem(30,30, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        frame = QFrame(self.youtubeInterface)
+        frame.setStyleSheet("background-color:white; border-radius:10px")
+        frame.setFixedSize(600,400)
+        frame_layout = QVBoxLayout(frame)
+
+        search_label = QLabel("search in youtube")
+        frame_layout.addWidget(search_label,alignment=Qt.AlignCenter)
+ 
+        search = LineEdit()
+        search.setPlaceholderText("search here")
+        frame_layout.addWidget(search, alignment=Qt.AlignCenter)
+
+        layout.addItem(top_spacer)
+        layout.addWidget(frame,alignment = Qt.AlignCenter)
+        layout.addItem(bottom_spacer)
+
+    def instagram_interface(self):
+        layout = self.instaInterface.layout()
+
+        top_spacer = QSpacerItem(30,30, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        bottum_spacer = QSpacerItem(30,30, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        
+
+        frame = QFrame(self.instaInterface)
+
+        frame_layout = QVBoxLayout(frame)
+
+        automate_label = QLabel("Automate instagram")
+        frame_layout.addWidget(automate_label,alignment=Qt.AlignCenter)
+
+        automate_line_Edit = LineEdit("Automate")
+        frame_layout.addWidget(automate_line_Edit,alignment=Qt.AlignCenter)
+
+        start_button = PrimaryPushButton("Start")
+        frame_layout.addWidget(start_button,alignment=Qt.AlignCenter)
+
+        layout.addItem(top_spacer)
+        layout.addWidget(frame,alignment= Qt.AlignCenter)
+        layout.addItem(bottum_spacer)
 
     def initNavigation(self):
 
@@ -180,7 +311,7 @@ class Window(FluentWindow):
 
     
     def whatsapp_automate(self):
-        user_contect_input = self.contacts.text()
+        user_contect_input = self.contact_detail.text()
         user_massage = self.massage.text()
         
         if user_contect_input:
