@@ -63,36 +63,49 @@ class Window(FluentWindow):
         if self.homeInterface.layout() is not None:
             old_layout = self.homeInterface.layout()
             QWidget().setLayout(old_layout)  # Clean up old layout
+
+
+        # self.homeInterface.setStyleSheet("""
+        #     QWidget {
+        #         background-image: url('assets/bg_image.png'); 
+        #         background-repeat: no-repeat; 
+        #         background-position: center; 
+        #         background-size: cover;
+        #     }
+        # """)
         
         # Set QHBoxLayout
-        layout = QHBoxLayout(self.homeInterface)
+        main_layout = QHBoxLayout(self.homeInterface)
+        main_layout.setContentsMargins(80,70,80,0)
 
-        top_spacer = QSpacerItem(33,33, QSizePolicy.Minimum,QSizePolicy.Expanding)
-        bottum_spacer = QSpacerItem(33,33, QSizePolicy.Minimum,QSizePolicy.Expanding)
-
+        layout = QHBoxLayout()
+        layout.setSpacing(17)
 
         # this is a whatsapp frame in home page
         frame = QFrame(self.homeInterface)
-        frame.setStyleSheet("background-color: white; border-radius:10px")
+        frame.setStyleSheet("font-size:16px; background-color: white; border-radius:10px")
         frame.setFixedSize(200,200)
 
         frame_layout = QVBoxLayout(frame)
 
-        what_label = QLabel("Click hare to automate whatsapp")
+        what_label = QLabel("Click here to automate whatsapp")
+        what_label.setWordWrap(True)
         frame_layout.addWidget(what_label,alignment=Qt.AlignCenter)
 
         button = PrimaryPushButton("Start")
+        button.clicked.connect(self.addFrameToWhatsAppInterface)
         frame_layout.addWidget(button,alignment=Qt.AlignCenter)
 
 
         # this is a telegram frame in home page
         frame2 = QFrame(self.homeInterface)
-        frame2.setStyleSheet("background-color: white; border-radius:10px")
+        frame2.setStyleSheet("font-size:16px; background-color: white;  border-radius:10px")
         frame2.setFixedSize(200,200)
 
         frame_layout = QVBoxLayout(frame2)
 
-        tel_label = QLabel("Click hare to automate telegram")
+        tel_label = QLabel("Click here to automate telegram")
+        tel_label.setWordWrap(True)
         frame_layout.addWidget(tel_label,alignment=Qt.AlignCenter)
 
         button = PrimaryPushButton("Start")
@@ -101,13 +114,15 @@ class Window(FluentWindow):
 
         # this is a instagram fram in home page
         frame3 = QFrame(self.homeInterface)
-        frame3.setStyleSheet("background-color: white; border-radius:10px")
+        frame3.setStyleSheet("font-size:16px; background-color: white;  border-radius:10px")
         frame3.setFixedSize(200,200)
 
         frame_layout = QVBoxLayout(frame3)
 
-        insta_label = QLabel("Click hare to automate instagram")
+        insta_label = QLabel("Click here to automate instagram")
+        insta_label.setWordWrap(True)
         frame_layout.addWidget(insta_label,alignment=Qt.AlignCenter)
+        insta_label.setFixedWidth(150)
 
         button = PrimaryPushButton("Start")
         frame_layout.addWidget(button,alignment=Qt.AlignCenter)
@@ -115,50 +130,56 @@ class Window(FluentWindow):
 
         # this is a youtube frame in home page
         frame4 = QFrame(self.homeInterface)
-        frame4.setStyleSheet("background-color: white; border-radius:10px")
+        frame4.setStyleSheet("font-size:16px; background-color: white;  border-radius:10px")
         frame4.setFixedSize(200,200)
 
         frame_layout = QVBoxLayout(frame4)
 
-        you_label = QLabel("Click hare to automate youtube")
+        you_label = QLabel("Click here to automate youtube")
+        you_label.setWordWrap(True)
         frame_layout.addWidget(you_label,alignment=Qt.AlignCenter)
-
         button = PrimaryPushButton("Start")
         frame_layout.addWidget(button,alignment=Qt.AlignCenter)
 
 
         # this is a amazon frame in home page
         frame5 = QFrame(self.homeInterface)
-        frame5.setStyleSheet("background-color: white; border-radius:10px")
+        frame5.setStyleSheet("font-size:16px; background-color: white; border-radius:10px")
         frame5.setFixedSize(200,200)
 
         frame_layout = QVBoxLayout(frame5)
 
-        ama_label = QLabel("Click hare to automate amazon")
+        ama_label = QLabel("Click here to automate amazon")
+        ama_label.setWordWrap(True)
         frame_layout.addWidget(ama_label,alignment=Qt.AlignCenter)
 
         button = PrimaryPushButton("Start")
         frame_layout.addWidget(button,alignment=Qt.AlignCenter)
 
-        layout.addItem(top_spacer)
-        layout.addWidget(frame,alignment= Qt.AlignCenter)
-        layout.addItem(bottum_spacer)
+        # layout.addItem(top_spacer)
+        layout.addWidget(frame,alignment= Qt.AlignTop)
+        # layout.addItem(bottum_spacer)
 
-        layout.addItem(top_spacer)
-        layout.addWidget(frame2,alignment= Qt.AlignCenter)
-        layout.addItem(bottum_spacer)
+        # layout.addItem(top_spacer)
+        layout.addWidget(frame2,alignment= Qt.AlignTop)
+        # layout.addItem(bottum_spacer)
 
-        layout.addItem(top_spacer)
-        layout.addWidget(frame3,alignment= Qt.AlignCenter)
-        layout.addItem(bottum_spacer)
+        # layout.addItem(top_spacer)
+        layout.addWidget(frame3,alignment= Qt.AlignTop)
+        # layout.addItem(bottum_spacer)
 
-        layout.addItem(top_spacer)
-        layout.addWidget(frame4,alignment= Qt.AlignCenter)
-        layout.addItem(bottum_spacer)
+        # layout.addItem(top_spacer)
+        layout.addWidget(frame4,alignment= Qt.AlignTop)
+        # layout.addItem(bottum_spacer)
+# 
+        # layout.addItem(top_spacer)
+        layout.addWidget(frame5,alignment= Qt.AlignTop)
+        # layout.addItem(bottum_spacer)
 
-        layout.addItem(top_spacer)
-        layout.addWidget(frame5,alignment= Qt.AlignCenter)
-        layout.addItem(bottum_spacer)
+
+        main_layout.addLayout(layout)
+        layout.addStretch(2)
+
 
 
     def addFrameToWhatsAppInterface(self):
@@ -181,7 +202,7 @@ class Window(FluentWindow):
         frame_layout = QVBoxLayout(frame)
         label = QLabel("Enter your contact name/number")
 
-        frame_layout.addStretch(1)
+        frame_layout.addStretch(0)
 
         label.setAlignment(Qt.AlignCenter)
         frame_layout.addWidget(label)
@@ -203,7 +224,7 @@ class Window(FluentWindow):
         start_button.clicked.connect(self.whatsapp_automate)
         frame_layout.addWidget(start_button, alignment=Qt.AlignCenter)
 
-        frame_layout.addStretch(1)
+        frame_layout.addStretch(0)
 
         # Add spacers and frame to layout
         layout.addItem(top_spacer)
@@ -216,10 +237,13 @@ class Window(FluentWindow):
         top_spacer = QSpacerItem(30,30, QSizePolicy.Minimum, QSizePolicy.Expanding)
         bottom_spacer = QSpacerItem(30,30, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
+
         frame = QFrame(self.amazonInterface)
         frame.setStyleSheet("background-color: white; border-radius: 10px")
         frame.setFixedSize(600,400)
         frame_layout = QVBoxLayout(frame)
+
+        frame_layout.addStretch(0)
 
         search_label = QLabel("Enter your search input")
         frame_layout.addWidget(search_label,alignment=Qt.AlignCenter)
@@ -232,7 +256,9 @@ class Window(FluentWindow):
         start_button = PrimaryPushButton("Start Automation")
         frame_layout.addWidget(start_button,alignment=Qt.AlignCenter)
 
-        frame.setFixedSize(600,400)
+        frame_layout.addStretch(0)
+
+      
         
         layout.addItem(top_spacer)
         layout.addWidget(frame, alignment= Qt.AlignCenter)
@@ -248,6 +274,7 @@ class Window(FluentWindow):
         frame.setStyleSheet("background-color:white; border-radius:10px")
         frame.setFixedSize(600,400)
         frame_layout = QVBoxLayout(frame)
+        
 
         search_label = QLabel("Enter which thing you want to search")
         frame_layout.addWidget(search_label,alignment=Qt.AlignCenter)
@@ -394,7 +421,7 @@ class Window(FluentWindow):
         # self.navigationInterface.setAcrylicEnabled(True)
 
     def initWindow(self):
-        self.resize(900, 700)
+        self.resize(900, 800)
         self.setWindowIcon(QIcon('logos/base_software_logo.png'))
         self.setWindowTitle('Automation-Base-Software')
 
