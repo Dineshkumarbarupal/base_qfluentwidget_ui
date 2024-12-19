@@ -218,11 +218,13 @@ class Window(FluentWindow):
         self.massage.setPlaceholderText("Enter your massage")
         frame_layout.addWidget(self.massage,alignment=Qt.AlignCenter)
 
+        frame_layout.addSpacing(2)
+
         start_button = PrimaryPushButton("Start")
         start_button.clicked.connect(self.whatsapp_automate)
         frame_layout.addWidget(start_button, alignment=Qt.AlignCenter)
 
-        frame_layout.setContentsMargins(0,150,0,150)
+        frame_layout.setContentsMargins(0,100,0,110)
 
         # Add spacers and frame to layout
         layout.addItem(top_spacer)
