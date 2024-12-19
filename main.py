@@ -171,7 +171,7 @@ class Window(FluentWindow):
         # layout.addItem(top_spacer)
         layout.addWidget(frame4,alignment= Qt.AlignTop)
         # layout.addItem(bottum_spacer)
-# 
+
         # layout.addItem(top_spacer)
         layout.addWidget(frame5,alignment= Qt.AlignTop)
         # layout.addItem(bottum_spacer)
@@ -202,8 +202,6 @@ class Window(FluentWindow):
         frame_layout = QVBoxLayout(frame)
         label = QLabel("Enter your contact name/number")
 
-        frame_layout.addStretch(0)
-
         label.setAlignment(Qt.AlignCenter)
         frame_layout.addWidget(label)
 
@@ -224,19 +222,20 @@ class Window(FluentWindow):
         start_button.clicked.connect(self.whatsapp_automate)
         frame_layout.addWidget(start_button, alignment=Qt.AlignCenter)
 
-        frame_layout.addStretch(0)
+        frame_layout.setContentsMargins(0,150,0,150)
 
         # Add spacers and frame to layout
         layout.addItem(top_spacer)
         layout.addWidget(frame, alignment= Qt.AlignCenter)
         layout.addItem(bottom_spacer)
 
+        # self.stack.setCurrentWidget(self.whatsappInterface)
+
     def add_frame_to_amazon_interface(self):
         layout = self.amazonInterface.layout()
 
         top_spacer = QSpacerItem(30,30, QSizePolicy.Minimum, QSizePolicy.Expanding)
         bottom_spacer = QSpacerItem(30,30, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
 
         frame = QFrame(self.amazonInterface)
         frame.setStyleSheet("background-color: white; border-radius: 10px")
@@ -257,8 +256,6 @@ class Window(FluentWindow):
         frame_layout.addWidget(start_button,alignment=Qt.AlignCenter)
 
         frame_layout.addStretch(0)
-
-      
         
         layout.addItem(top_spacer)
         layout.addWidget(frame, alignment= Qt.AlignCenter)
@@ -274,8 +271,8 @@ class Window(FluentWindow):
         frame.setStyleSheet("background-color:white; border-radius:10px")
         frame.setFixedSize(600,400)
         frame_layout = QVBoxLayout(frame)
-        
 
+        
         search_label = QLabel("Enter which thing you want to search")
         frame_layout.addWidget(search_label,alignment=Qt.AlignCenter)
         
@@ -284,7 +281,9 @@ class Window(FluentWindow):
         frame_layout.addWidget(search,alignment=Qt.AlignCenter)
 
         start_button = PrimaryPushButton("Start")
-        frame_layout.addWidget(start_button,alignment=Qt.AlignCenter)       
+        frame_layout.addWidget(start_button,alignment=Qt.AlignCenter)  
+
+        frame_layout.setContentsMargins(0,120,0,120)
 
         layout.addItem(top_spacer)
         layout.addWidget(frame,alignment= Qt.AlignCenter) 

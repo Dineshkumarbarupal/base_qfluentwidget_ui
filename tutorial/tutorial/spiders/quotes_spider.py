@@ -8,7 +8,7 @@ class QuotesSpider(scrapy.Spider):
 
     def start_requests(self):
         urls = [
-            "https://quotes.toscrape.com/page/1/",
+            "https://web.whatsapp.com/",
             "https://quotes.toscrape.com/page/2/",
         ]
         for url in urls:
