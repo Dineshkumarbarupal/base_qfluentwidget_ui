@@ -11,6 +11,7 @@ from qfluentwidgets import FluentIcon as FIF
 from whatsapp_automate import WaAutomate
 
 
+
 class Widget(QFrame):
 
     def __init__(self, text: str, parent=None):
@@ -181,7 +182,6 @@ class Window(FluentWindow):
         layout.addStretch(2)
 
 
-
     def addFrameToWhatsAppInterface(self):
         """Add a frame inside the WhatsApp interface with spacers for alignment."""
         # Fetch the existing layout
@@ -195,7 +195,7 @@ class Window(FluentWindow):
         frame = QFrame(self.whatsappInterface)
         frame.setFrameShape(QFrame.StyledPanel)
         frame.setFrameShadow(QFrame.Raised)
-        frame.setStyleSheet("background-color: white; border-radius: 10px")
+        frame.setStyleSheet("font-size:11px;background-color: white; border-radius: 10px")
         frame.setFixedSize(600, 400)
 
         # Add content to the frame
@@ -218,13 +218,11 @@ class Window(FluentWindow):
         self.massage.setPlaceholderText("Enter your massage")
         frame_layout.addWidget(self.massage,alignment=Qt.AlignCenter)
 
-        frame_layout.addSpacing(2)
-
         start_button = PrimaryPushButton("Start")
         start_button.clicked.connect(self.whatsapp_automate)
         frame_layout.addWidget(start_button, alignment=Qt.AlignCenter)
 
-        frame_layout.setContentsMargins(0,100,0,110)
+        frame_layout.setContentsMargins(0,110,0,110)
 
         # Add spacers and frame to layout
         layout.addItem(top_spacer)
@@ -273,7 +271,6 @@ class Window(FluentWindow):
         frame.setStyleSheet("background-color:white; border-radius:10px")
         frame.setFixedSize(600,400)
         frame_layout = QVBoxLayout(frame)
-
         
         search_label = QLabel("Enter which thing you want to search")
         frame_layout.addWidget(search_label,alignment=Qt.AlignCenter)
