@@ -11,7 +11,6 @@ from qfluentwidgets import FluentIcon as FIF
 from whatsapp_automate import WaAutomate
 
 
-
 class Widget(QFrame):
 
     def __init__(self, text: str, parent=None):
@@ -60,11 +59,9 @@ class Window(FluentWindow):
         self.initWindow()
 
     def home_interface(self):
-           # Remove existing layout (if any)
         if self.homeInterface.layout() is not None:
             old_layout = self.homeInterface.layout()
-            QWidget().setLayout(old_layout)  # Clean up old layout
-
+            QWidget().setLayout(old_layout)  
 
         # self.homeInterface.setStyleSheet("""
         #     QWidget {
@@ -75,7 +72,6 @@ class Window(FluentWindow):
         #     }
         # """)
         
-        # Set QHBoxLayout
         main_layout = QHBoxLayout(self.homeInterface)
         main_layout.setContentsMargins(80,70,80,0)
 
@@ -97,7 +93,6 @@ class Window(FluentWindow):
         button.clicked.connect(self.addFrameToWhatsAppInterface)
         frame_layout.addWidget(button,alignment=Qt.AlignCenter)
 
-
         # this is a telegram frame in home page
         frame2 = QFrame(self.homeInterface)
         frame2.setStyleSheet("font-size:16px; background-color: white;  border-radius:10px")
@@ -111,7 +106,6 @@ class Window(FluentWindow):
 
         button = PrimaryPushButton("Start")
         frame_layout.addWidget(button,alignment=Qt.AlignCenter)
-
 
         # this is a instagram fram in home page
         frame3 = QFrame(self.homeInterface)
@@ -128,7 +122,6 @@ class Window(FluentWindow):
         button = PrimaryPushButton("Start")
         frame_layout.addWidget(button,alignment=Qt.AlignCenter)
 
-
         # this is a youtube frame in home page
         frame4 = QFrame(self.homeInterface)
         frame4.setStyleSheet("font-size:16px; background-color: white;  border-radius:10px")
@@ -141,7 +134,6 @@ class Window(FluentWindow):
         frame_layout.addWidget(you_label,alignment=Qt.AlignCenter)
         button = PrimaryPushButton("Start")
         frame_layout.addWidget(button,alignment=Qt.AlignCenter)
-
 
         # this is a amazon frame in home page
         frame5 = QFrame(self.homeInterface)
@@ -156,31 +148,14 @@ class Window(FluentWindow):
 
         button = PrimaryPushButton("Start")
         frame_layout.addWidget(button,alignment=Qt.AlignCenter)
-
-        # layout.addItem(top_spacer)
         layout.addWidget(frame,alignment= Qt.AlignTop)
-        # layout.addItem(bottum_spacer)
-
-        # layout.addItem(top_spacer)
         layout.addWidget(frame2,alignment= Qt.AlignTop)
-        # layout.addItem(bottum_spacer)
-
-        # layout.addItem(top_spacer)
         layout.addWidget(frame3,alignment= Qt.AlignTop)
-        # layout.addItem(bottum_spacer)
-
-        # layout.addItem(top_spacer)
         layout.addWidget(frame4,alignment= Qt.AlignTop)
-        # layout.addItem(bottum_spacer)
-
-        # layout.addItem(top_spacer)
         layout.addWidget(frame5,alignment= Qt.AlignTop)
-        # layout.addItem(bottum_spacer)
-
 
         main_layout.addLayout(layout)
         layout.addStretch(2)
-
 
     def addFrameToWhatsAppInterface(self):
         """Add a frame inside the WhatsApp interface with spacers for alignment."""
@@ -373,51 +348,6 @@ class Window(FluentWindow):
 
         self.addSubInterface(self.settingInterface, FIF.SETTING, 'Settings', NavigationItemPosition.BOTTOM)
 
-        # self.contacts = LineEdit()
-        # # Set placeholder text
-        # self.contacts.setPlaceholderText("Enter contact name")
-        # # Set text
-        # # lineEdit.setText("shokokawaii@foxmail.com")
-        # print(self.contacts.text())
-        # # Enable clear button
-        # self.contacts.setClearButtonEnabled(True)
-
-        # self.contact_label = BodyLabel("Enter your contact detail")
-        # self.massage_label = BodyLabel("Enter your massage")
-        # self.massage = LineEdit()
-        # self.massage.setPlaceholderText("Enter your massage")
-        # # print(self.massage)
-        
-     
-       
-        # start_button = PrimaryPushButton("start",self.whatsappInterface)
-        # start_button.clicked.connect(self.whatsapp_automate)
-        # start_button.setSizePolicy(QSizePolicy.Expanding,QSizePolicy.Fixed)
-        # start_button.setFixedSize(77,28)
-
-
-        # self.whatsappInterface.hBoxLayout.setContentsMargins(0,300 , 0, 300)
-       
-        # self.whatsappInterface.hBoxLayout.addWidget(self.contact_label,alignment= Qt.AlignCenter)
-        # self.whatsappInterface.hBoxLayout.addWidget(self.contacts, alignment= Qt.AlignCenter)
-        # self.whatsappInterface.hBoxLayout.addWidget(self.massage_label,alignment= Qt.AlignCenter)
-        # self.whatsappInterface.hBoxLayout.addWidget(self.massage, alignment=Qt.AlignCenter)
-        # # self.whatsappInterface.hBoxLayout.setSpacing(1)
-        # self.whatsappInterface.hBoxLayout.addWidget(start_button,alignment= Qt.AlignCenter)
-
-
-        # add badge to navigation item
-        # item = self.navigationInterface.widget(self.videoInterface.objectName())
-        # InfoBadge.attension(
-        #     text=9,
-        #     parent=item.parent(),
-        #     target=item,
-        #     position=InfoBadgePosition.NAVIGATION_ITEM
-        # )
-
-        # NOTE: enable acrylic effect
-        # self.navigationInterface.setAcrylicEnabled(True)
-
     def initWindow(self):
         self.resize(900, 800)
         self.setWindowIcon(QIcon('logos/base_software_logo.png'))
@@ -426,10 +356,6 @@ class Window(FluentWindow):
         desktop = QApplication.desktop().availableGeometry()
         w, h = desktop.width(), desktop.height()
         self.move(w//2 - self.width()//2, h//2 - self.height()//2)
-
-        # set the minimum window width that allows the navigation panel to be expanded
-        # self.navigationInterface.setMinimumExpandWidth(900)
-        # self.navigationInterface.expand(useAni=False)
 
     def showMessageBox(self):
         w = MessageBox(

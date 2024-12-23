@@ -1,100 +1,70 @@
-from time import sleep
-from selenium import webdriver
-from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.actions.wheel_input import ScrollOrigin
-from time import sleep
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
+class WhatsAppAutomation:
+    
+    def __init__(self, driver, actions):
+        self.driver = driver
+        self.actions = actions
+    
+    def _wait_for_element(self, xpath, timeout=50):
+        """
+        Wait for an element to be clickable and return it.
+        
+        Args:
+            xpath (str): The XPath of the element.
+            timeout (int): The time to wait before throwing an exception.
+        
+        Returns:
+            WebElement: The clickable element.
+        """
+        return WebDriverWait(self.driver, timeout).until(
+            EC.element_to_be_clickable((By.XPATH, xpath))
+        )
+    
+    def _click_element(self, xpath):
+        """
+        Wait for the element and click it.
+        
+        Args:
+            xpath (str): The XPath of the element to click.
+        """
+        element = self._wait_for_element(xpath)
+        element.click()
 
-def test_can_scroll_to_element(driver):
-    driver.get("https://selenium.dev/selenium/web/scrolling_tests/frame_with_nested_scrolling_frame_out_of_view.html")
+    def _send_keys_to_element(self, xpath, text):
+        """
+        Wait for the input field, click it, and send the provided keys.
+        
+        Args:
+            xpath (str): The XPath of the input field.
+            text (str): The text to send to the input field.
+        """
+        element = self._wait_for_element(xpath)
+        element.click()
+        element.send_keys(text)
+        element.send_keys(Keys.ENTER)
 
+    def create_new_group(self):
+        """
+        Automate the process of creating a new group and adding members to it.
+        """
+        # Define XPaths for elements
+        xpath_new_group_button = '//*[@id="app"]/div/div[3]/div/div[3]/header/header/div/span/div/span/div[2]/div/span'
+        xpath_new_group_option = '//*[@id="app"]/div/div[3]/div/div[3]/header/header/div/span/div/span/div[2]/span/div/ul/li[1]/div'
+        xpath_add_member_input = '//*[@id="app"]/div/div[3]/div/div[2]/div[1]/span/div/span/div/div/div[1]/div/div/div[2]/input'
+        
+        try:
+            # Click on the "New Group" button
+            self._click_element(xpath_new_group_button)
+            
+            # Select the "New Group" option
+            self._click_element(xpath_new_group_option)
+            
+            # Add a member to the group
+            self._send_keys_to_element(xpath_add_member_input, "ContactName")  # Replace with actual contact name
 
-    iframe = driver.find_element(By.TAG_NAME, "iframe")
-    sleep(2)
-    ActionChains(driver)\
-        .scroll_to_element(iframe)\
-        .perform()
-    sleep(2)
-
-    assert _in_viewport(driver, iframe)
-
-
-def test_can_scroll_from_viewport_by_amount(driver):
-    driver.get("https://selenium.dev/selenium/web/scrolling_tests/frame_with_nested_scrolling_frame_out_of_view.html")
-
-    footer = driver.find_element(By.TAG_NAME, "footer")
-    sleep(2)
-    delta_y = footer.rect['y']
-    ActionChains(driver)\
-        .scroll_by_amount(0, delta_y)\
-        .perform()
-
-    sleep(0.5)
-    assert _in_viewport(driver, footer)
-
-
-def test_can_scroll_from_element_by_amount(driver):
-    driver.get("https://selenium.dev/selenium/web/scrolling_tests/frame_with_nested_scrolling_frame_out_of_view.html")
-
-    iframe = driver.find_element(By.TAG_NAME, "iframe")
-    sleep(2)
-    scroll_origin = ScrollOrigin.from_element(iframe)
-    ActionChains(driver)\
-        .scroll_from_origin(scroll_origin, 0, 200)\
-        .perform()
-
-    sleep(0.5)
-    driver.switch_to.frame(iframe)
-    checkbox = driver.find_element(By.NAME, "scroll_checkbox")
-    assert _in_viewport(driver, checkbox)
-
-
-def test_can_scroll_from_element_with_offset_by_amount(driver):
-    driver.get("https://selenium.dev/selenium/web/scrolling_tests/frame_with_nested_scrolling_frame_out_of_view.html")
-
-    footer = driver.find_element(By.TAG_NAME, "footer")
-    sleep(2)
-    scroll_origin = ScrollOrigin.from_element(footer, 0, -50)
-    ActionChains(driver)\
-        .scroll_from_origin(scroll_origin, 0, 200)\
-        .perform()
-
-    sleep(0.5)
-    iframe = driver.find_element(By.TAG_NAME, "iframe")
-    driver.switch_to.frame(iframe)
-    checkbox = driver.find_element(By.NAME, "scroll_checkbox")
-    assert _in_viewport(driver, checkbox)
-
-
-def test_can_scroll_from_viewport_with_offset_by_amount(driver):
-    driver.get("https://selenium.dev/selenium/web/scrolling_tests/frame_with_nested_scrolling_frame.html")
-
-    scroll_origin = ScrollOrigin.from_viewport(10, 10)
-    sleep(2)
-    ActionChains(driver)\
-        .scroll_from_origin(scroll_origin, 0, 200)\
-        .perform()
-
-    sleep(0.5)
-    iframe = driver.find_element(By.TAG_NAME, "iframe")
-    driver.switch_to.frame(iframe)
-    checkbox = driver.find_element(By.NAME, "scroll_checkbox")
-    assert _in_viewport(driver, checkbox)
-
-
-def _in_viewport(driver, element):
-    script = (
-        "for(var e=arguments[0],f=e.offsetTop,t=e.offsetLeft,o=e.offsetWidth,n=e.offsetHeight;\n"
-        "e.offsetParent;)f+=(e=e.offsetParent).offsetTop,t+=e.offsetLeft;\n"
-        "return f<window.pageYOffset+window.innerHeight&&t<window.pageXOffset+window.innerWidth&&f+n>\n"
-        "window.pageYOffset&&t+o>window.pageXOffset"
-    )
-    return driver.execute_script(script, element)
-driver = webdriver.Chrome()
-print(driver.capabilities)
-test_can_scroll_to_element(driver)
-test_can_scroll_from_viewport_by_amount(driver)
-test_can_scroll_from_element_by_amount(driver)
-test_can_scroll_from_element_with_offset_by_amount(driver)
-test_can_scroll_from_viewport_with_offset_by_amount(driver)
+        except Exception as e:
+            print(f"An error occurred: {e}")
