@@ -20,6 +20,7 @@ class WaAutomate:
 
     def _initialize_driver(self):
         chrome_options = Options()
+        # chrome_options.add_argument("--headless")  # This is  for running the chrome without gui
         chrome_options.add_argument("--user-data-dir=C:\\Users\\NSG\\AppData\\Local\\Google\\Chrome\\User Data")
         chrome_options.add_argument("--profile-directory=Profile 4")
         driver = webdriver.Chrome(options=chrome_options)
@@ -145,7 +146,7 @@ class WaAutomate:
         try:
             self.search_contact()
             self.extract_contacts()
-            self.create_new_group()
+            # self.create_new_group()
             # self.send_message()
             print("Automation completed successfully.")
         except Exception as e:
