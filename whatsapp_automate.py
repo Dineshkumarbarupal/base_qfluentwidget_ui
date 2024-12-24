@@ -21,6 +21,7 @@ class WaAutomate:
     def _initialize_driver(self):
         chrome_options = Options()
         # chrome_options.add_argument("--headless")  # This is  for running the chrome without gui
+        chrome_options.add_argument("--disable-gpu")  # Disable GPU rendering (for Windows)
         chrome_options.add_argument("--user-data-dir=C:\\Users\\NSG\\AppData\\Local\\Google\\Chrome\\User Data")
         chrome_options.add_argument("--profile-directory=Profile 4")
         driver = webdriver.Chrome(options=chrome_options)
