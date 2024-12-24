@@ -66,6 +66,7 @@ class WaAutomate:
                 break
 
         self._write_to_csv()
+        self.create_new_group()
 
     def _process_contacts(self, contacts,next_contacts):
         new_data_found = False
@@ -103,15 +104,15 @@ class WaAutomate:
 
     def create_new_group(self):
         
-        # data_frame_xpath = '//*[@id="app"]/div/span[2]/div/span/div/div/div/div/div/div/header/div/div[1]/div/span'
+        data_frame_xpath = '//*[@id="app"]/div/span[2]/div/span/div/div/div/div/div/div/header/div/div[1]/div/span'
         new_group_button_xpath = '//*[@id="app"]/div/div[3]/div/div[3]/header/header/div/span/div/span/div[2]/div/span'
         new_group_xpath = '//*[@id="app"]/div/div[3]/div/div[3]/header/header/div/span/div/span/div[2]/span/div/ul/li[1]/div'
         add_group_member_xpath = '//*[@id="app"]/div/div[3]/div/div[2]/div[1]/span/div/span/div/div/div[1]/div/div/div[2]/input'
 
-        # exit = WebDriverWait(self.driver,50).until(
-        #     EC.element_to_be_clickable((By.XPATH, data_frame_xpath))
-        # )
-        # self.actions.move_to_element(exit).click().perform()
+        exit = WebDriverWait(self.driver,50).until(
+            EC.element_to_be_clickable((By.XPATH, data_frame_xpath))
+        )
+        self.actions.move_to_element(exit).click().perform()
 
         new_group_button = WebDriverWait(self.driver,50).until(
             EC.element_to_be_clickable((By.XPATH, new_group_button_xpath))
@@ -129,7 +130,6 @@ class WaAutomate:
         self.actions.move_to_element(add_group_member).click().send_keys().send_keys(Keys.ENTER).perform()
 
 
-       
     def send_message(self):
         try:
             message_box_xpath = '//*[@id="main"]/footer/div[1]/div/span/div/div[2]/div[1]'
@@ -142,12 +142,10 @@ class WaAutomate:
             print(f"Error sending message: {e}")
 
 
-        
     def run(self):
         try:
             self.search_contact()
             self.extract_contacts()
-            # self.create_new_group()
             # self.send_message()
             print("Automation completed successfully.")
         except Exception as e:
