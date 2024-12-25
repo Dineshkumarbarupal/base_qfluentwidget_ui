@@ -7,7 +7,6 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support import expected_conditions as EC
 from time import sleep
 
-
 class TelegramAutomate:
     def __init__(self,contacts):
         self.contacts = contacts
