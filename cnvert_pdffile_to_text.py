@@ -14,6 +14,6 @@ def pdf_to_text(pdf_path, output_text_file):
                 # Write the extracted text to the output file
                 if text:  # Avoid writing empty pages
                     text_file.write(text + '\n')
-
+                    
 # Example usage
 pdf_to_text("PLAN A.pdf", "output.txt")
