@@ -63,15 +63,6 @@ class Window(FluentWindow):
             old_layout = self.homeInterface.layout()
             QWidget().setLayout(old_layout)  
 
-        # self.homeInterface.setStyleSheet("""
-        #     QWidget {
-        #         background-image: url('assets/bg_image.png'); 
-        #         background-repeat: no-repeat; 
-        #         background-position: center; 
-        #         background-size: cover;
-        #     }
-        # """)
-        
         main_layout = QHBoxLayout(self.homeInterface)
         main_layout.setContentsMargins(80,70,80,0)
 
