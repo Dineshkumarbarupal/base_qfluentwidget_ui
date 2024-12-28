@@ -3,12 +3,13 @@ import sys
 
 from PyQt5.QtCore import Qt, QUrl,QSize
 from PyQt5.QtGui import QIcon, QDesktopServices, QFont
-from PyQt5.QtWidgets import QApplication, QFrame, QHBoxLayout,QVBoxLayout,QSizePolicy,QLabel,QSpacerItem,QWidget
+from PyQt5.QtWidgets import QApplication, QFrame, QHBoxLayout,QVBoxLayout,QSizePolicy,QLabel,QSpacerItem,QWidget,QPushButton
 from qfluentwidgets import (NavigationItemPosition, MessageBox, setTheme, Theme, FluentWindow,
                             NavigationAvatarWidget, qrouter, SubtitleLabel, setFont, InfoBadge,
-                            InfoBadgePosition, FluentBackgroundTheme, PrimaryPushButton,LineEdit, BodyLabel)
+                            InfoBadgePosition, FluentBackgroundTheme, PrimaryPushButton,LineEdit, BodyLabel,SingleDirectionScrollArea)
 from qfluentwidgets import FluentIcon as FIF
 from whatsapp_automate import WaAutomate
+from practice.ui_practice import Demo
 
 
 class Widget(QFrame):
@@ -48,6 +49,12 @@ class Window(FluentWindow):
         self.instaInterface.label.setText('')
         self.youtubeInterface.label.setText('')
         self.amazonInterface.label.setText('')
+
+        self.homeInterface.setStyleSheet("background-image: url('6201771.jpg'); "
+                                 "background-repeat: no-repeat; "
+                                 "border-radius:10px"
+                                 "background-position: center; "
+                                 "background-attachment: fixed;")
         
         self.home_interface()
         self.addFrameToWhatsAppInterface()
@@ -64,15 +71,19 @@ class Window(FluentWindow):
             QWidget().setLayout(old_layout)  
 
         main_layout = QHBoxLayout(self.homeInterface)
-        main_layout.setContentsMargins(80,70,80,0)
+        main_layout.setContentsMargins(80,70,80,200)
 
         layout = QHBoxLayout()
         layout.setSpacing(17)
 
+        label = BodyLabel("Automation")
+        label.setStyleSheet("font-size: 24px")
+        main_layout.addWidget(label,alignment=Qt.AlignTop)
+
         # this is a whatsapp frame in home page
         frame = QFrame(self.homeInterface)
-        frame.setStyleSheet("font-size:16px; background-color: white; border-radius:10px")
-        frame.setFixedSize(200,200)
+        frame.setStyleSheet("font-size:13px; background-color: white; border-radius:10px")
+        frame.setFixedSize(160,190)
 
         frame_layout = QVBoxLayout(frame)
 
@@ -86,8 +97,8 @@ class Window(FluentWindow):
 
         # this is a telegram frame in home page
         frame2 = QFrame(self.homeInterface)
-        frame2.setStyleSheet("font-size:16px; background-color: white;  border-radius:10px")
-        frame2.setFixedSize(200,200)
+        frame2.setStyleSheet("font-size:13px; background-color: white;  border-radius:10px")
+        frame2.setFixedSize(160,190)
 
         frame_layout = QVBoxLayout(frame2)
 
@@ -100,36 +111,36 @@ class Window(FluentWindow):
 
         # this is a instagram fram in home page
         frame3 = QFrame(self.homeInterface)
-        frame3.setStyleSheet("font-size:16px; background-color: white;  border-radius:10px")
-        frame3.setFixedSize(200,200)
+        frame3.setStyleSheet("font-size:13px; background-color: white;  border-radius:10px")
+        frame3.setFixedSize(160,190)
 
         frame_layout = QVBoxLayout(frame3)
 
         insta_label = QLabel("Click here to automate instagram")
         insta_label.setWordWrap(True)
         frame_layout.addWidget(insta_label,alignment=Qt.AlignCenter)
-        insta_label.setFixedWidth(150)
 
         button = PrimaryPushButton("Start")
         frame_layout.addWidget(button,alignment=Qt.AlignCenter)
 
         # this is a youtube frame in home page
         frame4 = QFrame(self.homeInterface)
-        frame4.setStyleSheet("font-size:16px; background-color: white;  border-radius:10px")
-        frame4.setFixedSize(200,200)
+        frame4.setStyleSheet("font-size:13px; background-color: white;  border-radius:10px")
+        frame4.setFixedSize(160,190)
 
         frame_layout = QVBoxLayout(frame4)
 
         you_label = QLabel("Click here to automate youtube")
         you_label.setWordWrap(True)
         frame_layout.addWidget(you_label,alignment=Qt.AlignCenter)
+
         button = PrimaryPushButton("Start")
         frame_layout.addWidget(button,alignment=Qt.AlignCenter)
 
         # this is a amazon frame in home page
         frame5 = QFrame(self.homeInterface)
-        frame5.setStyleSheet("font-size:16px; background-color: white; border-radius:10px")
-        frame5.setFixedSize(200,200)
+        frame5.setStyleSheet("font-size:13px; background-color: white; border-radius:10px")
+        frame5.setFixedSize(160,190)
 
         frame_layout = QVBoxLayout(frame5)
 
