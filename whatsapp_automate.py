@@ -6,6 +6,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.chrome.options import Options
+from selenium.common.exceptions import TimeoutException
+
 from time import sleep
 
 class WaAutomate:
@@ -103,31 +105,39 @@ class WaAutomate:
         print(f"Data written to {csv_file}")
 
     def create_new_group(self):
-        
-        # data_frame_xpath = '//*[@id="app"]/div/span[2]/div/span/div/div/div/div/div/div/header/div/div[1]/div/span'
+        data_frame_xpath = '//*[@id="app"]/div/span[2]/div/span/div/div/div/div/div/div/header/div/div[1]/div/span'
         new_group_button_xpath = '//*[@id="app"]/div/div[3]/div/div[3]/header/header/div/span/div/span/div[2]/div/span'
         new_group_xpath = '//*[@id="app"]/div/div[3]/div/div[3]/header/header/div/span/div/span/div[2]/span/div/ul/li[1]/div'
         add_group_member_xpath = '//*[@id="app"]/div/div[3]/div/div[2]/div[1]/span/div/span/div/div/div[1]/div/div/div[2]/input'
 
-        # exit = WebDriverWait(self.driver,50).until(
-        #     EC.element_to_be_clickable((By.XPATH, data_frame_xpath))
-        # )
-        # self.actions.move_to_element(exit).click().perform()
+        try:
+            # Locate and click the data frame
+            exit = WebDriverWait(self.driver, 20).until(
+                EC.element_to_be_clickable((By.XPATH, data_frame_xpath))
+            )
+            self.actions.move_to_element(exit).click().perform()
 
-        new_group_button = WebDriverWait(self.driver,50).until(
-            EC.element_to_be_clickable((By.XPATH, new_group_button_xpath))
-        )
-        self.actions.move_to_element(new_group_button).click().perform()
+            # Locate and click the new group button
+            new_group_button = WebDriverWait(self.driver, 20).until(
+                EC.element_to_be_clickable((By.XPATH, new_group_button_xpath))
+            )
+            new_group_button.click()
 
-        new_group = WebDriverWait(self.driver,50).until(
-            EC.element_to_be_clickable((By.XPATH, new_group_xpath))
-        )
-        self.actions.move_to_element(new_group).click().perform()
+            # Select 'New Group' option
+            new_group = WebDriverWait(self.driver, 20).until(
+                EC.element_to_be_clickable((By.XPATH, new_group_xpath))
+            )
+            new_group.click()
 
-        add_group_member = WebDriverWait(self.driver,50).until(
-            EC.element_to_be_clickable((By.XPATH, add_group_member_xpath))
-        )
-        self.actions.move_to_element(add_group_member).click().send_keys().send_keys(Keys.ENTER).perform()
+            # Add a group member
+            add_group_member = WebDriverWait(self.driver, 20).until(
+                EC.element_to_be_clickable((By.XPATH, add_group_member_xpath))
+            )
+            add_group_member.send_keys("Contact Name").send_keys(Keys.ENTER)
+
+        except TimeoutException as e:
+            print(f"An element was not found or clickable in time: {e}")
+
 
 
     def send_message(self):

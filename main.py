@@ -49,12 +49,6 @@ class Window(FluentWindow):
         self.instaInterface.label.setText('')
         self.youtubeInterface.label.setText('')
         self.amazonInterface.label.setText('')
-
-        self.homeInterface.setStyleSheet("background-image: url('6201771.jpg'); "
-                                 "background-repeat: no-repeat; "
-                                 "border-radius:10px"
-                                 "background-position: center; "
-                                 "background-attachment: fixed;")
         
         self.home_interface()
         self.addFrameToWhatsAppInterface()
@@ -70,8 +64,8 @@ class Window(FluentWindow):
             old_layout = self.homeInterface.layout()
             QWidget().setLayout(old_layout)  
 
-        main_layout = QHBoxLayout(self.homeInterface)
-        main_layout.setContentsMargins(80,70,80,200)
+        main_layout = QVBoxLayout(self.homeInterface)
+        main_layout.setContentsMargins(80,60,80,450)
 
         layout = QHBoxLayout()
         layout.setSpacing(17)
@@ -130,9 +124,9 @@ class Window(FluentWindow):
 
         frame_layout = QVBoxLayout(frame4)
 
-        you_label = QLabel("Click here to automate youtube")
-        you_label.setWordWrap(True)
-        frame_layout.addWidget(you_label,alignment=Qt.AlignCenter)
+        youtube_label = QLabel("Click here to automate youtube")
+        youtube_label.setWordWrap(True)
+        frame_layout.addWidget(youtube_label,alignment=Qt.AlignCenter)
 
         button = PrimaryPushButton("Start")
         frame_layout.addWidget(button,alignment=Qt.AlignCenter)
@@ -157,7 +151,7 @@ class Window(FluentWindow):
         layout.addWidget(frame5,alignment= Qt.AlignTop)
 
         main_layout.addLayout(layout)
-        layout.addStretch(2)
+        layout.addStretch(5)
 
     def addFrameToWhatsAppInterface(self):
         """Add a frame inside the WhatsApp interface with spacers for alignment."""
