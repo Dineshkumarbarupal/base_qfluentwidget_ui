@@ -27,6 +27,7 @@ class Managment:
     def show_blance(self):
 
     def show_AC(self):
+        
 
     def show_debit(self):
 
