@@ -9,7 +9,7 @@ from qfluentwidgets import (NavigationItemPosition, MessageBox, setTheme, Theme,
                             InfoBadgePosition, FluentBackgroundTheme, PrimaryPushButton,LineEdit, BodyLabel,SingleDirectionScrollArea)
 from qfluentwidgets import FluentIcon as FIF
 from whatsapp_automate import WaAutomate
-from practice.ui_practice import Demo
+# from practice.ui_practice import Demo
 
 
 class Widget(QFrame):
@@ -77,6 +77,8 @@ class Window(FluentWindow):
 
         # this is a whatsapp frame in home page
         frame = QFrame(self.homeInterface)
+        frame.setStyleSheet("font-size:13px; background-color: white; border-radius:10px")
+        frame.setFixedSize(160,190)
 
         frame_layout = QVBoxLayout(frame)
 

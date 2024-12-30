@@ -21,13 +21,10 @@ class Managment:
             credit_amount = input("Enter your amount:")
         elif user_input == "5":
             self.exit_from()  
-        
-
 
     def show_blance(self):
 
     def show_AC(self):
-        
 
     def show_debit(self):
 

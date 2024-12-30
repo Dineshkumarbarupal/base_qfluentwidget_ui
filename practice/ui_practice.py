@@ -1,58 +1,60 @@
-# coding: utf-8
-import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout, QWidget, QLabel
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication, QListWidgetItem, QListWidget, QWidget, QHBoxLayout
-
-from qfluentwidgets import ListView, setTheme, Theme, ListWidget
-
-
-
-class Demo(QWidget):
-
+class HomePage(QWidget):
     def __init__(self):
         super().__init__()
-        # setTheme(Theme.DARK)
+        self.initUI()
 
-        self.hBoxLayout = QHBoxLayout(self)
-        self.listWidget = ListWidget(self)
+    def initUI(self):
+        layout = QVBoxLayout()
 
-        # self.listWidget.setAlternatingRowColors(True)
+        # Button for WhatsApp Automation
+        self.whatsapp_button = QPushButton("Click here to automate WhatsApp")
+        self.whatsapp_button.clicked.connect(self.open_whatsapp_interface)
 
-        # self.listWidget.setSelectRightClickedRow(True)
+        layout.addWidget(QLabel("Automation"))
+        layout.addWidget(self.whatsapp_button)
 
-        stands = [
-            '白金之星', '绿色法皇', "天堂制造", "绯红之王",
-            '银色战车', '疯狂钻石', "壮烈成仁", "败者食尘",
-            "黑蚊子多", '杀手皇后', "金属制品", "石之自由",
-            "砸瓦鲁多", '钢链手指', "臭氧宝宝", "华丽挚爱",
-            "隐者之紫", "黄金体验", "虚无之王", "纸月之王",
-            "骇人恶兽", "男子领域", "20世纪男孩", "牙 Act 4",
-            "铁球破坏者", "性感手枪", 'D4C • 爱之列车', "天生完美",
-            "软又湿", "佩斯利公园", "奇迹于你", "行走的心",
-            "护霜旅行者", "十一月雨", "调情圣手", "片刻静候"
-        ]
-        for stand in stands:
-            item = QListWidgetItem(stand)
-            item.setIcon(QIcon(':/qfluentwidgets/images/logo.png'))
-            # item.setCheckState(Qt.Unchecked)
-            self.listWidget.addItem(item)
+        self.setLayout(layout)
 
-        self.setStyleSheet("Demo{background: rgb(249, 249, 249)} ")
-        self.hBoxLayout.setContentsMargins(0, 0, 0, 0)
-        self.hBoxLayout.addWidget(self.listWidget)
-        self.resize(300, 400)
+    def open_whatsapp_interface(self):
+        # Signal to open WhatsApp interface
+        self.parentWidget().open_whatsapp_interface()
+
+
+class WhatsAppInterface(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        layout = QVBoxLayout()
+        layout.addWidget(QLabel("Welcome to WhatsApp Automation"))
+        self.setLayout(layout)
+
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        self.setWindowTitle("Automation-Base-Software")
+
+        # Create Home Page and WhatsApp Interface
+        self.home_page = HomePage()
+        self.whatsapp_interface = WhatsAppInterface()
+
+        # Set Home Page as central widget
+        self.setCentralWidget(self.home_page)
+
+    def open_whatsapp_interface(self):
+        # Replace current widget with WhatsApp interface
+        self.setCentralWidget(self.whatsapp_interface)
 
 
 if __name__ == "__main__":
-    # enable dpi scale
-    QApplication.setHighDpiScaleFactorRoundingPolicy(
-        Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
-    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
-    QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
-
-    app = QApplication(sys.argv)
-    w = Demo()
-    w.show()
-    app.exec()
+    app = QApplication([])
+    window = MainWindow()
+    window.show()
+    app.exec_()
