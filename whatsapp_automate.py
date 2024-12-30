@@ -11,7 +11,6 @@ from selenium.common.exceptions import TimeoutException
 from time import sleep
 
 class WaAutomate:
-
     def __init__(self, contact_detail, message):
         self.contact_detail = contact_detail
         self.message = message
@@ -56,8 +55,8 @@ class WaAutomate:
         new_data = self.driver.find_elements(By.XPATH,'//*[@id="app"]/div/span[2]/div/span/div/div/div/div/div/div/div[2]/div/div/div/div[6]/div/div/div[2]/div[1]/div/div/span')
         iframe = self.driver.find_element(By.XPATH, iframe_xpath)
 
-        for _ in range(90):
-            self.driver.execute_script("arguments[0].scrollTop += 600;", iframe)
+        for _ in range(10):
+            self.driver.execute_script("arguments[0].scrollTop += 500;", iframe)
             sleep(1)
 
             contacts = self.driver.find_elements(By.CLASS_NAME, '_ajzr')
@@ -80,20 +79,20 @@ class WaAutomate:
                     self.contact_data.append({"Number": name})
                     print(f"Extracted: {name}")
                     new_data_found = True
-                for next_contact in next_contacts:
-                    try:
-                        name = next_contact.text.strip()
-                        if name and name not in self.previous_contacts:
-                            self.previous_contacts.add(name)
-                            self.contact_data.append({"Number": name})
-                            print(f"Extracted: {name}")
-                            new_data_found = True
-                         
-                            break
-                    except Exception as e:
-                        print(f"Error extacting contacet: {e}")
             except Exception as e:
                 print(f"Error extracting contact: {e}")
+        for next_contact in next_contacts:
+            try:
+                name = next_contact.text.strip()
+                if name and name not in self.previous_contacts:
+                    self.previous_contacts.add(name)
+                    self.contact_data.append({"Number": name})
+                    print(f"Extracted: {name}")
+                    new_data_found = True
+                         
+                break
+            except Exception as e:
+                        print(f"Error extacting contacet: {e}")
         return new_data_found
     
     def _write_to_csv(self):
@@ -104,11 +103,23 @@ class WaAutomate:
             writer.writerows(self.contact_data)
         print(f"Data written to {csv_file}")
 
+    def read_csv_file(self):
+        csv_file = "contacts.csv"
+        contects = []
+        with open(csv_file, "r") as file:
+            data = csv.DictReader(file)
+            for contect in data:
+                contects.append(contect['Number'])
+            return contects
+
     def create_new_group(self):
         data_frame_xpath = '//*[@id="app"]/div/span[2]/div/span/div/div/div/div/div/div/header/div/div[1]/div/span'
         new_group_button_xpath = '//*[@id="app"]/div/div[3]/div/div[3]/header/header/div/span/div/span/div[2]/div/span'
         new_group_xpath = '//*[@id="app"]/div/div[3]/div/div[3]/header/header/div/span/div/span/div[2]/span/div/ul/li[1]/div'
         add_group_member_xpath = '//*[@id="app"]/div/div[3]/div/div[2]/div[1]/span/div/span/div/div/div[1]/div/div/div[2]/input'
+        next_button_xpath = '//*[@id="app"]/div/div[3]/div/div[2]/div[1]/span/div/span/div/div/span/div/span'
+        group_subject_xpath = '//*[@id="app"]/div/div[3]/div/div[2]/div[1]/span/div/span/div/div/div[1]/div[2]/div/div[2]/div[3]/div/div/p'
+        creat_group_button_xpath = '//*[@id="app"]/div/div[3]/div/div[2]/div[1]/span/div/span/div/div/span/div/div/span'
 
         try:
             # Locate and click the data frame
@@ -129,15 +140,36 @@ class WaAutomate:
             )
             new_group.click()
 
-            # Add a group member
-            add_group_member = WebDriverWait(self.driver, 20).until(
-                EC.element_to_be_clickable((By.XPATH, add_group_member_xpath))
-            )
-            add_group_member.send_keys("Contact Name").send_keys(Keys.ENTER)
+            contects = self.read_csv_file()
+            print(contects)
 
+            for contacts_no in contects:
+                add_group_member = WebDriverWait(self.driver,20).until(
+                    EC.element_to_be_clickable((By.XPATH, add_group_member_xpath))
+                )
+                add_group_member.send_keys(contacts_no)
+                sleep(1)
+                add_group_member.send_keys(Keys.ENTER)
+                sleep(1)
+
+            next_button = WebDriverWait(self.driver,40).until(
+                EC.element_to_be_clickable((By.XPATH, next_button_xpath))
+            )
+            next_button.click()
+
+            group_subject = WebDriverWait(self.driver,40).until(
+                EC.element_to_be_clickable((By.XPATH,group_subject_xpath))
+            )
+            group_subject.send_keys("new group")
+            group_subject.send_keys(Keys.ENTER)
+    
+            create_group_button = WebDriverWait(self.driver,40).until(
+                EC.element_to_be_clickable((By.XPATH,creat_group_button_xpath))
+            )
+            create_group_button.click()
+                 
         except TimeoutException as e:
             print(f"An element was not found or clickable in time: {e}")
-
 
 
     def send_message(self):
@@ -151,11 +183,11 @@ class WaAutomate:
         except Exception as e:
             print(f"Error sending message: {e}")
 
-
     def run(self):
         try:
             self.search_contact()
             self.extract_contacts()
+            self.read_csv_file()
             # self.send_message()
             print("Automation completed successfully.")
         except Exception as e:

@@ -69,6 +69,7 @@ class Window(FluentWindow):
 
         layout = QHBoxLayout()
         layout.setSpacing(17)
+        layout.setContentsMargins(0,50,0,0)
 
         label = BodyLabel("Automation")
         label.setStyleSheet("font-size: 24px")
@@ -151,7 +152,9 @@ class Window(FluentWindow):
         layout.addWidget(frame5,alignment= Qt.AlignTop)
 
         main_layout.addLayout(layout)
+        main_layout.addStretch()
         layout.addStretch(5)
+        
 
     def addFrameToWhatsAppInterface(self):
         """Add a frame inside the WhatsApp interface with spacers for alignment."""

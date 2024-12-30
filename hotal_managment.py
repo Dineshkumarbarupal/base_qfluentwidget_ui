@@ -30,7 +30,7 @@ class Managment:
 
     def show_debit(self):
 
-    def show_credit(self)
+    def show_credit(self):
         
     def exit_from(self):
 
