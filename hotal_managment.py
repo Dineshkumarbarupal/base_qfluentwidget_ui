@@ -23,6 +23,7 @@ class Managment:
             self.exit_from()  
 
     def show_blance(self):
+        print(self.balance)
 
     def show_AC(self):
 
